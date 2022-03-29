@@ -1,0 +1,23 @@
+#Tabla Clientes
+
+CREATE TABLE `nutriclient`.`clientes` ( `Id` INT NOT NULL AUTO_INCREMENT , `Nombre` VARCHAR(30) NOT NULL , `Apellidos` VARCHAR(60) NOT NULL , `Sexo` CHAR(1) NOT NULL , `Telefono` INT(9) NOT NULL , `Email` VARCHAR(320) NOT NULL , `Poblacion` VARCHAR(30) , `Codigopostal` INT(5) , `Direccion` VARCHAR(30) , `NumConsultas` INT(4) , `Idenfermedad` INT(4) , `Medicacion` TINYINT(1) NOT NULL , `Descripcionmed` VARCHAR(500) , `Fechanac` DATE NOT NULL , `Informacionadd` VARCHAR(1000) , `Nacionalidad` VARCHAR(20) NOT NULL , `Situacionlaboral` VARCHAR(20) , `Niveleconomico` VARCHAR(20) , `Fechacreacion` DATE NOT NULL , PRIMARY KEY (`Id`)) ENGINE = InnoDB;
+
+
+#Tabla Enfermedades
+
+CREATE TABLE `nutriclient`.`enfernedades` ( `Id` INT NOT NULL AUTO_INCREMENT , `Nombre` VARCHAR(30) NOT NULL , `Descripcion` VARCHAR(1000) NULL , PRIMARY KEY (`Id`)) ENGINE = InnoDB;
+
+
+#Tabla Especialistas
+
+CREATE TABLE `nutriclient`.`especialistas` ( `Id` INT NOT NULL AUTO_INCREMENT , `Nombre` VARCHAR(30) NOT NULL , `Apellidos` VARCHAR(60) NOT NULL , `Usuario` VARCHAR(20) NOT NULL , `Contraseña` VARCHAR(20) NOT NULL , `Activo` TINYINT NOT NULL , `Telefono` VARCHAR(9) NOT NULL , PRIMARY KEY (`Id`)) ENGINE = InnoDB;
+
+
+#Tabla Consultas
+
+CREATE TABLE `nutriclient`.`consultas` ( `Id` INT NOT NULL AUTO_INCREMENT , `Fecha` DATETIME NOT NULL , `Pago` DECIMAL, `Pagoadeber` TINYINT NOT NULL , `Ultimaconsulta` TINYINT NOT NULL , `Idespecialista` INT NOT NULL , `Idcliente` INT NOT NULL , PRIMARY KEY (`Id`)) ENGINE = InnoDB;
+
+
+#Tabla Informes
+
+CREATE TABLE `nutriclient`.`informes` ( `Id` INT NOT NULL AUTO_INCREMENT , `Peso` DECIMAL , `Detalle` VARCHAR(150) , `Dieta` VARCHAR(150) , `Rutina` VARCHAR(150) , PRIMARY KEY (`Id`)) ENGINE = InnoDB;

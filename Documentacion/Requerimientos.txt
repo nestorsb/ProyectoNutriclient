@@ -1,0 +1,7 @@
+API creada a partir del video: https://www.youtube.com/watch?v=OWukxSRtr-A&t=1272s
+
+Para la creacion usamos:
+	- Node.js
+	- Express
+	- Mysql
+	-Extension Client Res en VSC 

@@ -1,5 +1,22 @@
 API creada a partir del video: https://www.youtube.com/watch?v=OWukxSRtr-A&t=1272s
 
+Comandos para la creación:
+	BackEnd:
+		-	npm init -y 
+		-	npm install express
+		-	node server.js
+		-	node i nodemon --save-dev
+		-	node i mysql express-myconnection
+
+
+		-	npm run start 				---		(para iniciar el back)
+
+	FrontEnd:
+		-	npm install -g @vue/cli		---		(si ya tenias vue CLI instalado, entonces actualizalo con -->	npm update -g @vue/cli)
+		-	vue create nutriclient		---		(Elije "Manually Select features", despues selecciona *Babel, *TypeScript, *Router, *Vuex, *CSS Pre-processors, *Linter/Formatter, x3, yes, yes, no, Sass/SCSS, Prettier, Lint on save, In dedicated config files, No)
+		- 	npm install vue bootstrap-vue bootstrap --save
+		-	npm install --save axios vue-axios
+		-	npm run serve 				---		(para iniciar front)
 Para la creacion usamos:
 	- Node.js
 	- Express

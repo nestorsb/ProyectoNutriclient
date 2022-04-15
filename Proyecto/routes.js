@@ -63,6 +63,22 @@ const routes = express.Router()
 
 
 
+//ESPECIALISTAS
+
+    //Log in
+routes.post('/login/',(req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query("SELECT * FROM `especialistas` WHERE Usuario = '" + req.body.Usuario + "' AND Contraseña = '" + req.body.Contraseña + "';", (err, rows)=>{
+            if(err) return res.send(err)
+            
+            res.json(rows);
+
+        })
+    })
+} )
+
 // CLIENTES
 
     //GEL ALL  

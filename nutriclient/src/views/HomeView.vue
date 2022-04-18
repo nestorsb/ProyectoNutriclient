@@ -76,27 +76,6 @@ import axios from "axios";
       error_msg: "",
     };
   },
-  methods: {
-    async login() {
-      let json = {
-        Usuario: this.username,
-        Contraseña: this.password,
-      };
-      await axios.post("http://localhost:9000/api/login/", json).then((res) => {
-        console.log(res.data[0].Usuario);
-        console.log(res.data[0].Contraseña);
-        console.log(res);
-        if (res.status === 200 && res.data.length > 0) {
-          if (
-            this.username === res.data[0].Usuario &&
-            this.password === res.data[0].Contraseña
-          ) {
-            console.log("logged");
-          } else {
-            this.error = true;
-            this.error_msg = res.data.result.error_msg;
-          }
-        }
       });
     },
   },

@@ -1,0 +1,20 @@
+export default class Cliente {
+  Nombre!: string;
+  Apellidos!: string;
+  Sexo!: string;
+  Telefono!: number;
+  Email!: string;
+  Poblacion!: string;
+  Codigopostal!: number;
+  Direccion!: string;
+  NumConsultas!: number;
+  Idenfermedad!: number;
+  Medicacion!: number;
+  Descripcionmed!: string;
+  Fechanac!: Date;
+  Informacionadd!: string;
+  Nacionalidad!: string;
+  Situacionlaboral!: string;
+  Niveleconomico!: string;
+  Fechacreacion!: Date;
+};

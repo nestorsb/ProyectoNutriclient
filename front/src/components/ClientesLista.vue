@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headersClientes"
-      :items="clientes"
+      :items="Clientes"
       item-key="Id"
       class="elevation-1"
       :search="search"
@@ -15,16 +15,10 @@
           class="mx-4"
         ></v-text-field>
       </template>
-      <template v-slot:body.append>
+      <template v-slot:body>
         <tr>
           <td></td>
-          <td>
-            <v-text-field
-              v-model="calories"
-              type="number"
-              label="Less than"
-            ></v-text-field>
-          </td>
+          <td></td>
           <td colspan="4"></td>
         </tr>
       </template>
@@ -32,12 +26,14 @@
   </div>
 </template>
 <script lang="ts">
+import axios from "axios";
+import Cliente from "../assets/dtos/ClienteDto";
+
 export default {
-  name: "Clientes-lista",
+  name: "ClientesLista",
   data: () => ({
     search: "",
     calories: "",
-    Clientes: [],
     computed: {
       headersClientes() {
         return [
@@ -147,7 +143,7 @@ export default {
       },
     },
     methods: {
-      filterOnlyCapsText(value, search, item) {
+      filterOnlyCapsText(value: { toString: () => string }, search: string) {
         return (
           value != null &&
           search != null &&
@@ -157,5 +153,16 @@ export default {
       },
     },
   }),
+  // created() {
+  //   axios.get("http://localhost:9000/api/clientes/").then((res) => {
+  //     console.log(res.data);
+  //     res.data.forEach((cliente, index) => {
+  //       let clientes: [];
+  //       //@ts-ignore
+  //       clientes[index] = cliente
+  //       console.log(cliente);
+  //     });
+  //   });
+  // },
 };
 </script>

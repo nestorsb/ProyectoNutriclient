@@ -27,7 +27,7 @@
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block> Logout </v-btn>
+          <v-btn block @click="logout()"> Logout </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
@@ -64,8 +64,8 @@ export default class MenuLateral extends Vue {
       public toggleDrawer() {
         this.drawer = !this.drawer;
       }
-      public hola(){
-        alert("culo gordo")
+      public logout(){
+        this.$emit('logout');
       }
 
   };

@@ -71,7 +71,7 @@
 import axios from 'axios';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
-Vue.prototype.$login = false
+
 
 export default Vue.extend({
   vuetify: new Vuetify(),
@@ -83,7 +83,7 @@ export default Vue.extend({
   },
   methods: {
     async validate() {
-        
+        console.log(this.G_login);
       if (this.$refs.loginForm.validate()) {
           let json = {
               "Usuario" : this.loginUser,
@@ -92,9 +92,9 @@ export default Vue.extend({
         await axios.post('http://localhost:9000/api/login/', json).then((res) => {
             if(res.data[0]){
                 if(res.data.length > 0){
-                    alert(this.$login)
+                    alert(this.G_login)
                     this.$login = true
-                    alert(this.$login)
+                    alert(this.G_login)
                 }
 
             }
@@ -139,18 +139,18 @@ export default Vue.extend({
     loginPassword: "",
     loginUser: "",
     loginUserRules: [
-      v => !!v || "Required",
-      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      (v: any) => !!v || "Required",
+      (v: any) => /.+@.+\..+/.test(v) || "E-mail must be valid"
     ],
     emailRules: [
-      v => !!v || "Required",
-      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      (v: any) => !!v || "Required",
+      (v: any) => /.+@.+\..+/.test(v) || "E-mail must be valid"
     ],
 
     show1: false,
     rules: {
-      required: value => !!value || "Required.",
-      min: v => (v && v.length >= 5) || "Min 8 characters"
+      required: (value: any) => !!value || "Required.",
+      min: (v: any) => (v && v.length >= 5) || "Min 8 characters"
     }
   })
 });

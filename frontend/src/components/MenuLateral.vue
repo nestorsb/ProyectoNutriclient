@@ -48,7 +48,6 @@
 import { Component } from 'vue-property-decorator';
 import Vue from "vue";
 
-
 @Component
 export default class MenuLateral extends Vue {
     public drawer: boolean = true;

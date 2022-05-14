@@ -72,16 +72,51 @@ routes.post('/login/',(req, res)=>{
 
         conn.query("SELECT * FROM `especialistas` WHERE Usuario = '" + req.body.Usuario + "' AND Contraseña = '" + req.body.Contraseña + "';", (err, rows)=>{
             if(err) return res.send(err)
-            
             res.json(rows);
+        })
+    })
+} )
 
+    //register
+routes.post('/register/',(req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query("INSERT INTO `especialistas` (Nombre, Apellidos, Usuario, Contraseña, Activo, Telefono, Email) VALUES ('"+ req.body.Nombre +"', '"+ req.body.Apellidos +"', '"+ req.body.Usuario +"', '"+ req.body.Contraseña +"', '"+ req.body.Activo +"', '"+ req.body.Telefono +"', '"+ req.body.Email +"');", (err, rows)=>{
+            if(err) return res.send(err)
+            res.json(rows);
         })
     })
 } )
 
 // CLIENTES
+    //GUARDAR CLIENTE
+routes.post('/nuevocliente/',(req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
 
-    //GEL ALL  
+        conn.query("INSERT INTO `clientes` (`Id`, `Nombre`, `Apellidos`, `Sexo`, `Telefono`, `Email`, `Poblacion`, `Codigopostal`, `Direccion`, `NumConsultas`, `Enfermedad`, `DescEnfermedad`, `Medicacion`, `Descripcionmed`, `Fechanac`, `Informacionadd`, `Nacionalidad`, `Situacionlaboral`, `Fechacreacion`) VALUES (NULL,'"+ req.body.Nombre +"', '"+ req.body.Apellidos +"', '"+ req.body.Sexo +"', '"+ req.body.Telefono +"', '"+ req.body.Email +"', '"+ req.body.Poblacion +"', '"+ req.body.Email +"','"+ req.body.Codigopostal +"','"+ req.body.Direccion +"','"+ req.body.NumConsultas +"','"+ req.body.Enfermedad +"','"+ req.body.DescEnfermedad +"','"+ req.body.Medicacion +"','"+ req.body.Descripcionmed +"','"+ req.body.Fechanac +"','"+ req.body.Informacionadd +"','"+ req.body.Nacionalidad +"','"+ req.body.SituacionLaboral +"','"+ req.body.Fechacreacion +"');", (err, rows)=>{
+            if(err) return res.send(err)
+            res.json(rows);
+        })
+    })
+} )
+
+    //MODIFICAR CLIENTE
+    
+routes.put('modificarcliente/:Id',(req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query('UPDATE `clientes` set ? WHERE Id = ?', [req.body ,req.params.Id], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('Cliente actualizado!')
+
+        })
+    })
+
+    //GET ALL  
 routes.get('/clientes', (req, res) => {
     req.getConnection((err, conn) => {
         if (err) return res.send(err)

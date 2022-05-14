@@ -6,7 +6,20 @@ Content-Type: application/json
     "Usuario": "admin",
     "Contraseña": "admin"
 }
+###
+POST  http://localhost:9000/api/register/ HTTP/1.1
+Content-Type: application/json
 
+{
+    "Id": 3,
+    "Nombre": "admin2",
+    "Apellidos": "admin2",
+    "Usuario": "admin2",
+    "Contraseña": "admin2",
+    "Activo": 1,
+    "Telefono": "0",
+    "Email": "admin2@admin.admin"
+}
 
 ###
 GET http://localhost:9000/api/clientes/ HTTP/1.1

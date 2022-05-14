@@ -16,7 +16,9 @@ Comandos para la creación:
 		-	vue create nutriclient		---		(Elije "Manually Select features", despues selecciona *Babel, *TypeScript, *Router, *Vuex, *CSS Pre-processors, *Linter/Formatter, x3, yes, yes, no, Sass/SCSS, Prettier, Lint on save, In dedicated config files, No)
 		- 	npm install vue bootstrap-vue bootstrap --save
 		-	npm install --save axios vue-axios
+		-	npm install bcrypt
 		-	npm run serve 				---		(para iniciar front)
+		- 
 Para la creacion usamos:
 	- Node.js
 	- Express

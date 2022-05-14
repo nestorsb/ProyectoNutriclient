@@ -1,25 +1,19 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
+import ClientesView from '../views/ClientesView.vue'
 import LoginViews from '../views/LoginViews.vue'
 
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/home',
-    name: 'home',
-    component: HomeView
+    path: '/clientes',
+    name: 'clientes',
+    component: ClientesView
   },
   {
     path: '/',
     name: 'login',
-    component: LoginView
-  },
-  {
-    path: '/login',
-    name: 'loginn',
     component: LoginViews
   },
   {

@@ -1,0 +1,145 @@
+import {
+  getModule,
+  Module,
+  VuexModule,
+  Mutation,
+  Action,
+} from "vuex-module-decorators";
+import { store } from "@/store/store";
+import { ssmHttpService } from "@/shared/services/http-service";
+import { API } from "@/shared/api";
+import { User } from "@/shared/dtos/user";
+
+@Module({
+  namespaced: true,
+  name: "UsuarioModule",
+  store,
+  dynamic: true,
+})
+class UsuarioModule extends VuexModule {
+  public usuarioActual: User = new User();
+  public users: User[] = [];
+  public user: User = new User();
+
+  @Action({ commit: "onGetUsuarios" })
+  public async getUsuarios(showLoading: boolean = false) {
+    return await ssmHttpService.get(
+      API.Usuario + "/GetAllUsuarios",
+      null,
+      showLoading
+    );
+  }
+
+  @Action({ commit: "asignarUsuario" })
+  public async getUsuarioLogin(id: any, showLoading: boolean = false) {
+    return await ssmHttpService.get(
+      API.Usuario + "/FindUsuarioPorId?idUser=" + id,
+      null,
+      showLoading
+    );
+  }
+
+  @Action({ commit: "asignarUsuario" })
+  public async getUsuarioLoginName(id: any, showLoading: boolean = false) {
+    return await ssmHttpService.get(
+      API.Usuario + "/FindUsuarioPorNombre/" + id,
+      null,
+      showLoading
+    );
+  }
+
+  @Action({ commit: "onGetUsuario" })
+  public async getUsuarioPorId(id: any, showLoading: boolean = false) {
+    return await ssmHttpService.get(
+      API.Usuario + "/FindUsuarioPorId?idUser=" + id,
+      null,
+      showLoading
+    );
+  }
+
+  @Action({ commit: "onGetUsuario" })
+  public async getUsuarioPorNombre(id: any, showLoading: boolean = false) {
+    return await ssmHttpService.get(
+      API.Usuario + "/FindUsuarioPorNombre/" + id,
+      null,
+      showLoading
+    );
+  }
+
+  @Action({ commit: "onGetUsuario" })
+  public async getUsuarioPorNormalizedNombre(
+    id: any,
+    showLoading: boolean = false
+  ) {
+    return await ssmHttpService.get(
+      API.Usuario + "/FindUsuarioPorNormalizedName/" + id,
+      null,
+      showLoading
+    );
+  }
+
+  @Action
+  public async guardarUsuario(User: User) {
+    /*toJson() no existe pero existe en la extends de BaseDto*/
+    let res = await ssmHttpService.post(
+      API.Usuario + "/NuevoUsuario/",
+      User.toJson()
+    );
+    this.getUsuarioPorId(User.Id);
+    return res;
+  }
+
+  @Action
+  public async modificarUsuario(user: User) {
+    let res = await ssmHttpService.put(
+      API.Usuario + "/UpdateUsuario/" + user.Id,
+      user.toJson()
+    );
+    this.getUsuarioPorId(user.Id);
+    return res;
+  }
+
+  @Action
+  public async eliminarUsuario(User: User) {
+    return await ssmHttpService.delete(
+      API.Usuario + "/" + User.Id,
+      null,
+      false
+    );
+  }
+
+  @Mutation
+  public onGetUsuarios(res: User[]) {
+    this.users = res ? res.map((x) => new User(x)) : [];
+  }
+
+  @Mutation
+  public onGetUsuario(res: User) {
+    this.user = new User(res);
+  }
+
+  @Mutation
+  public asignarUsuario(item: User) {
+    this.usuarioActual = item;
+  }
+
+  @Mutation
+  public eliminarUsuarioActual() {
+    this.usuarioActual = new User();
+  }
+}
+export default getModule(UsuarioModule);
+
+
+
+
+
+
+
+
+
+//******************************************************
+import usuarioModule from "@/store/modules/usuario-module";
+
+
+await usuarioModule.getUsuarioLoginName(UsuarioSession.UserName);

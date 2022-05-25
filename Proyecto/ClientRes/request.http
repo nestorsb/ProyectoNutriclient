@@ -12,9 +12,9 @@ Content-Type: application/json
 
 {
     "Id": 3,
-    "Nombre": "admin2",
+    "Nombre": "admin6 ",
     "Apellidos": "admin2",
-    "Usuario": "admin2",
+    "Usuario": "admin8",
     "Contraseña": "admin2",
     "Activo": 1,
     "Telefono": "0",
@@ -23,6 +23,10 @@ Content-Type: application/json
 
 ###
 GET http://localhost:9000/api/clientes/ HTTP/1.1
+
+
+###
+GET http://localhost:9000/api/deleteCliente/4 HTTP/1.1
 
 ###
 POST http://localhost:9000/api HTTP/1.1

@@ -12,7 +12,7 @@
       </v-list-item>
       <v-divider></v-divider>
       <v-list>
-        <v-list-item v-for="item in items" :key="item.title" link>
+        <v-list-item v-for="item in items" :key="item.title" @click="$router.push(item.link)">
           <v-list-item-icon>
             <v-icon class="iconitemlista">{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -55,9 +55,9 @@ export default class MenuLateral extends Vue {
     data() {
     return {
       items: [
-        { title: "Clientes", icon: "mdi-account-box" },
-        { title: "Consultas", icon: "mdi-account-box" },
-        { title: "Calendario", icon: "mdi-gavel" },
+        { title: "Clientes", icon: "mdi-account-box", link: "clientes"},
+        { title: "Consultas", icon: "mdi-account-box", link: "consultas"},
+        // { title: "Calendario", icon: "mdi-gavel", link: "" },
       ],
     }
     }
@@ -65,8 +65,10 @@ export default class MenuLateral extends Vue {
         this.drawer = !this.drawer;
       }
       public logout(){
-        this.$emit('logout');
+        this.$router.push("/")
       }
+
+    
 
   };
 </script>

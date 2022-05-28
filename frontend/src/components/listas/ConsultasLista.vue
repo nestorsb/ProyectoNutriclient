@@ -87,7 +87,7 @@
   ref="ConsultasForm"
   :ShowDialog="ShowDialog"
   :isNew="isNew"
-  :ConsultaSeleccionado="ConsultaSeleccionada"
+  :ConsultaSeleccionada="ConsultaSeleccionada"
   @closeDialog="closeDialog"
   />
     </v-card-title>
@@ -120,9 +120,10 @@ import axios from "axios";
 import Vue from "vue";
 import { mixins } from "vue-class-component";
 import { Component, Ref } from 'vue-property-decorator';
-import Consulta from "../../assets/Dtos/ConsultasDto"
-import ConsultasForm from  '../forms/ConsultasForm.vue'
-import moment from 'moment'
+import Consulta from "../../assets/Dtos/ConsultasDto";
+import ConsultasForm from  '../forms/ConsultasForm.vue';
+import moment from 'moment';
+import Cookies from 'js-cookie';
 
 @Component({
   components: {ConsultasForm}
@@ -134,7 +135,7 @@ export default class ConsultasLista extends mixins() {
       public ShowDialog: boolean = false;
       public search: string = "";
       public selected:[] = [];
-      public ConsultasSeleccionada!: {};
+      public ConsultaSeleccionada!: {};
       public isNew!: boolean;
       public formKey: number = 0
       public listKey: number = 0
@@ -230,8 +231,9 @@ export default class ConsultasLista extends mixins() {
     }
 
     public editItem (event: any, {item}: any) {
+      console.log(item)
       this.isNew = false;
-      this.ConsultasSeleccionada = item;
+      this.ConsultaSeleccionada = item;
       this.ShowDialog = true
     }
 
@@ -283,27 +285,22 @@ export default class ConsultasLista extends mixins() {
         },
         {
           text: "Pago A Deber",
-          align: "d-none",
+          align: " d-none",
           value: "Pagoadeber",
         },
         {
-          text: "Ultima Consulta",
-          align: "d-none",
-          value: "UltimaConsulta",
-        },
-        {
           text: "Especialista",
-          align: "d-none1",
+          align: " d-none",
           value: "Idespecialista",
         },
         {
           text: "Informe",
-          align: "d-none",
+          align: " d-none",
           value: "Idcliente",
         },
         {
           text: "Informe",
-          align: "start",
+          align: " d-none",
           value: "Idinforme",
         },
         {

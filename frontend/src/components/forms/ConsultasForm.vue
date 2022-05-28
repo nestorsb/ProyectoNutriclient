@@ -23,13 +23,14 @@
                         sm="6"
                         md="4"
                         >
-                        <v-combobox
-                        v-model="Idcliente"
-                        :items="clientes"
-                        label="Clientes"
-                        clearable
-                        solo
-                        ></v-combobox>
+                        <v-autocomplete
+                           v-model="clienteConsulta"
+                           label="Clientes"
+                           :items="clientes"
+                           item-value="Id"
+                           item-text="Nombre"
+                           @click="a()"
+                        />
                      </v-col>                     
                      <v-col
                         cols="12"
@@ -74,7 +75,7 @@
                         md="4"
                         >
                         <v-text-field
-                            v-model="Pago"
+                           v-model="Pago"
                            label="Pago*"
                            required
                            persistent-hint
@@ -125,7 +126,7 @@
                   text
                   @click="confirmDialog = true"
                   >
-                  Eliminar Cliente
+                  Eliminar Consulta
                </v-btn>
                <v-btn
                   color="blue darken-1"
@@ -182,8 +183,9 @@ import Vuetify from "vuetify";
 import axios from 'axios';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import Consultas from '../../assets/Dtos/ConsultasDto'
-import Clientes from '../../assets/Dtos/ClienteDto'
 import moment from 'moment'
+import Cliente from "../../assets/Dtos/ClienteDto";
+import Cookies from 'js-cookie';
 
 
 @Component
@@ -192,8 +194,12 @@ import moment from 'moment'
       @Prop({default: false}) public ShowDialog!: boolean;
       @Prop() public isNew!: boolean;
       @Prop({default: undefined}) public ConsultaSeleccionada!: Consultas;
-      public clientes!: Clientes[]
       
+
+       //combobox clientes
+      public clientes!: Cliente[];
+      public clienteConsulta!: any;
+
       //confirm dialog
       public confirmDialog: boolean = false;
       public options: {
@@ -213,8 +219,7 @@ import moment from 'moment'
       public Id!: number
       public Fecha!: string
       public Pago!: boolean
-      public Pagoadeber!: number
-      public UltimaConsulta!: number
+      public Pagoadeber!: number | boolean
       public Idespecialista!: number
       public Idcliente!: number
       public Idinforme!: number
@@ -238,11 +243,11 @@ import moment from 'moment'
       public created(){
       axios.get('http://localhost:9000/api/clientes/').then((res)=>{
             if(res.data[0]){
-               this.clientes = res.data
-               // this.$forceUpdate()
-            }
-          });  
-      }
+               this.clientes = res.data;                
+               this.$forceUpdate()
+               };
+            })
+          };  
 
       public closeDialog(alertType?: number){
         alertType 
@@ -254,99 +259,72 @@ import moment from 'moment'
          this.confirmDialog = false;
       }
 
-      // @Watch("ClienteSeleccionado")
-      // public reformat(){
-      //    if(this.ClienteSeleccionado.Id)
-      //    this.reformatSomeInputs(true)
-      // }
+            @Watch("ConsultaSeleccionada")
+      public reformat(){
+         if(this.ConsultaSeleccionada.Id)
+         this.reformatSomeInputs(true)
+      }
 
       @Watch("ShowDialog")
       public startEditing(){
         if(this.ShowDialog == false){
           this.closeDialog();
         }else{
-         //   this.reformatSomeInputs(true)
+           this.reformatSomeInputs(true)
         }
 
 
         if(!this.isNew){
-      this.Id = this.ConsultaSeleccionada.Id
-      this.Fecha = this.ConsultaSeleccionada.Fecha
-      this.Pago = this.ConsultaSeleccionada.Pago
-      this.Pagoadeber = this.ConsultaSeleccionada.Pagoadeber
-      this.UltimaConsulta = this.ConsultaSeleccionada.UltimaConsulta
-      this.Idespecialista = this.ConsultaSeleccionada.Idespecialista
-      this.Idcliente = this.ConsultaSeleccionada.Idcliente
-      this.Idinforme = this.ConsultaSeleccionada.Idinforme
-      this.Observaciones = this.ConsultaSeleccionada.Observaciones
+            this.Id = this.ConsultaSeleccionada.Id
+            this.Fecha = this.ConsultaSeleccionada.Fecha
+            this.Pago = this.ConsultaSeleccionada.Pago
+            this.Pagoadeber = this.ConsultaSeleccionada.Pagoadeber
+            this.Idespecialista = this.ConsultaSeleccionada.Idespecialista
+            this.Idcliente = this.ConsultaSeleccionada.Idcliente
+            this.clienteConsulta = this.ConsultaSeleccionada.Idcliente
+            this.Idinforme = this.ConsultaSeleccionada.Idinforme
+            this.Observaciones = this.ConsultaSeleccionada.Observaciones
         }else{
-      this.Id = null
-      this.Fecha = null
-      this.Pago = null
-      this.Pagoadeber = null
-      this.UltimaConsulta = null
-      this.Idespecialista = null
-      this.Idcliente = null
-      this.Idinforme = null
-      this.Observaciones = null
+            this.Id = null
+            this.Fecha = null
+            this.Pago = null
+            this.Pagoadeber = null
+            this.Idespecialista = null
+            this.Idcliente = null
+            this.Idinforme = null
+            this.Observaciones = null
 
         }
       }
 
-      // public reformatSomeInputs(recieving: boolean){
-      //    if(recieving){
-      //       if (this.Sexo){
-      //          switch(this.Sexo){
-      //             case 'H':
-      //                this.Sexo = 'Hombre'
-      //                break;
-      //             case 'M':
-      //                this.Sexo = 'Mujer'
-      //                break;
-      //             case 'O':
-      //                this.Sexo = 'Otro'
-      //                break;
-      //          }
-      //       }
+      public reformatSomeInputs(recieving: boolean){
+         if(recieving){
+            if (this.Pagoadeber != null && this.Pagoadeber != undefined){
+               switch(this.Pagoadeber){
+                  case 1:
+                     this.Pagoadeber = true
+                     break;               
+                  case 0:
+                     this.Pagoadeber = false
+                     break;
+               }
+            }
 
-      //       if (this.Medicacion != null && this.Medicacion != undefined){
-      //          switch(this.Medicacion){
-      //             case 1:
-      //                this.Medicacion = true
-      //                break;               
-      //             case 0:
-      //                this.Medicacion = false
-      //                break;
-      //          }
-      //       }
+         }else{
+            if (this.Pagoadeber){
+               switch(this.Pagoadeber){
+                  case true:
+                     this.Pagoadeber = 1
+                     break;               
+                  case false:
+                     this.Pagoadeber = 0
+                     break;
+               }
+            }
+         }
+      }
 
-      //    }else{
-      //       if (this.Sexo){
-      //          switch(this.Sexo){
-      //             case 'Hombre':
-      //                this.Sexo = 'H'
-      //                break;
-      //             case 'Mujer':
-      //                this.Sexo = 'M'
-      //                break;
-      //             case 'Otro':
-      //                this.Sexo = 'O'
-      //                break;
-      //          }
-      //       }
 
-      //       if (this.Medicacion){
-      //          switch(this.Medicacion){
-      //             case true:
-      //                this.Medicacion = 1
-      //                break;               
-      //             case false:
-      //                this.Medicacion = 0
-      //                break;
-      //          }
-      //       }
-      //    }
-      // }
 
       async eliminar(){
          await axios.delete("http://localhost:9000/api/deleteConsulta/" + this.Id).then((res)=>{
@@ -363,45 +341,27 @@ import moment from 'moment'
 
       guardar(){
         if((this.$refs.form as HTMLFormElement).validate()){
-
          if(this.isNew){
               this.Id = 0
-        }
-
-      //   this.reformatSomeInputs(false)
-        
+        }  
+        this.reformatSomeInputs(false)      
         let Obj = {
             "Id": this.Id,
             "Fecha": this.Fecha ? this.Fecha : moment().format('DD/MM/YYYY'),
             "Pago": this.Pago,
             "Pagoadeber": this.Pagoadeber ? this.Pagoadeber: 0,
-            "UltimaConsulta": this.UltimaConsulta ? this.UltimaConsulta : 0,
-            "Idespecialista": this.Idespecialista,
-            "Idcliente": this.Idcliente,
-            "Idinforme": this.Idinforme,
-            "Observaciones": this.Observaciones ? this.Observaciones : null
-         //   "Id": this.Id,
-         //  "Nombre": this.Nombre,
-         //  "Apellidos": this.Apellidos,
-         //  "Sexo": this.Sexo,
-         //  "Telefono": this.Telefono,
-         //  "Email": this.Email,
-         //  "Poblacion": this.Poblacion ? this.Poblacion : null,
-         //  "Codigopostal": this.Codigopostal ? this.Codigopostal : null,
-         //  "Direccion": this.Direccion ? this.Direccion : null,
-         //  "Medicacion": this.Medicacion ? this.Medicacion : null,
-         //  "Descripcionmed": this.Descripcionmed ? this.Descripcionmed : false ,
-         //  "Fechanac": this.date ? moment(this.date).format('DD/MM/YYYY') : null,
-         //  "Informacionadd": this.Informacionadd ? this.Informacionadd : null,
-         //  "Nacionalidad": this.Nacionalidad ? this.Nacionalidad : null,
-         //  "Situacionlaboral": this.Situacionlaboral ? this.Situacionlaboral : null,
-         //  "Fechacreacion": moment().format('DD/MM/YYYY hh:mm:ss')
-        } 
+            "Idespecialista": Cookies.get('userId'),
+            "Idcliente": this.clienteConsulta,
+            "Idinforme": this.Idinforme ? this.Idinforme : 1,
+            "Observaciones": this.Observaciones ? this.Observaciones : ""
+        }
+        console.log(Obj) 
 
 
         if(this.isNew){
            axios.post('http://localhost:9000/api/nuevaConsulta/', Obj).then((res)=>{
-              if(typeof res.data.insertId !== undefined){
+              if(typeof res.data.insertId != undefined){
+                 console.log(res);
                  this.closeDialog(1)
             }else{
                this.closeDialog(2)

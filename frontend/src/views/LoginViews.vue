@@ -114,6 +114,7 @@ import axios from 'axios';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import { mapState } from "vuex";
+import Cookies from 'js-cookie'
 // import UsuarioModule from '../Modules/UsuarioModule'
 
 //crypting info
@@ -139,9 +140,14 @@ export default Vue.extend({
                 }
                  axios.post('http://localhost:9000/api/login/', json).then((res) => {
                     if(res.data[0]){
+                        console.log(res.data);
                         if(res.data.length > 0){
-                        }
+                    //coockies
+                        Cookies.set('user', json.Usuario, {expires: 1});
+                        Cookies.set('userId', res.data[0].Id, {expires: 1});
+
                         this.$router.push({path: 'clientes'})
+                            }
                     }else{
                         this.alerts.loginIncorrecto = true
                         setTimeout(()=>{

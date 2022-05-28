@@ -1,13 +1,13 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app class="blue darken-4" dark>
-      <v-list-item two-line>
+      <v-list-item>
         <v-list-item-avatar>
-          <img src="https://randomuser.me/api/portraits/women/81.jpg" />
+          <img src="../assets/account-circle-outline.png" />
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title>Jane Smith</v-list-item-title>
+          <v-list-item-title class="user">{{getUser()}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
@@ -27,7 +27,7 @@
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block @click="logout()"> Logout </v-btn>
+          <v-btn block @click="logout()"> Cerrar Sesion </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
@@ -47,6 +47,7 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
 import Vue from "vue";
+import Cookies from 'js-cookie'
 
 
 @Component
@@ -57,7 +58,6 @@ export default class MenuLateral extends Vue {
       items: [
         { title: "Clientes", icon: "mdi-account-box", link: "clientes"},
         { title: "Consultas", icon: "mdi-account-box", link: "consultas"},
-        // { title: "Calendario", icon: "mdi-gavel", link: "" },
       ],
     }
     }
@@ -65,9 +65,13 @@ export default class MenuLateral extends Vue {
         this.drawer = !this.drawer;
       }
       public logout(){
+        Cookies.remove('user',{ path: '' })
+        Cookies.remove('userId',{ path: '' })
         this.$router.push("/")
       }
-
+      getUser(){
+        return Cookies.get('user')
+      }
     
 
   };
@@ -75,5 +79,9 @@ export default class MenuLateral extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
+.user{
+  font-size: 1.5em;
+  padding-top: 5px; 
+  padding-bottom: 5px; 
+}
 </style>

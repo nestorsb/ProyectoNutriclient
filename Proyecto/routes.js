@@ -167,7 +167,7 @@ const routes = express.Router()
                     req.getConnection((err, conn)=>{
                         if(err) return res.send(err)
     
-                        conn.query("INSERT INTO `consultas` (`Id`, `Fecha`, `Pago`, `Pagoadeber`, `Ultimaconsulta`, `Idespecialista`, `Idcliente`, `Idinforme`, `Observaciones`) VALUES (NULL,'"+ req.body.Fecha +"', '"+ req.body.Pago +"', '"+ req.body.Pagoadeber +"', '"+ req.body.Ultimaconsulta +"', '"+ req.body.Idespecialista +"', '"+ req.body.Idcliente +"', '"+ req.body.Idinforme +"','"+ req.body.Observaciones +"');", (err, rows)=>{
+                        conn.query("INSERT INTO `consultas` (`Id`, `Fecha`, `Pago`, `Pagoadeber`, `Idespecialista`, `Idcliente`, `Idinforme`, `Observaciones`) VALUES (NULL,'"+ req.body.Fecha +"', '"+ req.body.Pago +"', '"+ req.body.Pagoadeber +"', '"+ req.body.Idespecialista +"', '"+ req.body.Idcliente +"', '"+ req.body.Idinforme +"','"+ req.body.Observaciones +"');", (err, rows)=>{
                             if(err) return res.send(err)                            
                             res.json(rows);
                         })
@@ -218,7 +218,7 @@ const routes = express.Router()
                 })
     
                 // DELETE BY ID
-                routes.delete('/deleteConsultas/:Id',(req, res)=>{
+                routes.delete('/deleteConsulta/:Id',(req, res)=>{
                         req.getConnection((err, conn)=>{
                             if(err) return res.send(err)
                     

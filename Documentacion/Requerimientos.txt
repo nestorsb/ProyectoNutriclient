@@ -1,4 +1,4 @@
-API creada a partir del video: https://www.youtube.com/watch?v=OWukxSRtr-A&t=1272s
+
 
 Comandos para la creación:
 	BackEnd:
@@ -13,7 +13,7 @@ Comandos para la creación:
 
 	FrontEnd:
 		-	npm install -g @vue/cli		---		(si ya tenias vue CLI instalado, entonces actualizalo con -->	npm update -g @vue/cli)
-		-	vue create nutriclient		---		(Elije "Manually Select features", despues selecciona *Babel, *TypeScript, *Router, *Vuex, *CSS Pre-processors, *Linter/Formatter, x3, yes, yes, no, Sass/SCSS, Prettier, Lint on save, In dedicated config files, No)
+		-	vue create nutriclient		---		Mirar abajo detalles front
 		- 	npm install vue bootstrap-vue bootstrap --save
 		-	npm install --save axios vue-axios
 		-	npm install bcrypt

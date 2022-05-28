@@ -10,14 +10,19 @@
   import Vue from 'vue'
   import ClientesLista from '../components/listas/ClientesLista.vue'
   import FooterAbsolute from '../components/FooterAbsolute.vue'
-  import HelloWorld from '../components/HelloWorld.vue'
   import MenuLateral from '../components/MenuLateral.vue'
+  import Cookies from 'js-cookie';
 
   export default Vue.extend({
     name: 'Home',
 
+        beforeCreate(){
+      if(Cookies.get('user') == undefined){
+         this.$router.push({path: '/'})
+      }
+    },
+
     components: {
-      HelloWorld,
       MenuLateral,
       ClientesLista,
       FooterAbsolute,
